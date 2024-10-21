@@ -50,7 +50,10 @@ def run_experiment(agent, env):
     agent.initialize(env)
     done = False
     n_moves = 0
+
+    no_errs = True
     start_t = time.time()
+
     try:
         while not done:
             action = agent.step(obs)
@@ -62,6 +65,8 @@ def run_experiment(agent, env):
                 obs = env.step(action)
     except Exception:
         action = "e -1"
+        no_errs = False
+
     end_t = time.time()
 
     exec_time = end_t - start_t
@@ -70,18 +75,22 @@ def run_experiment(agent, env):
     else:
         win = 1
 
-    return exec_time, win, n_moves
+    return no_errs, exec_time, win, n_moves
 
 
 def run_experiments(exp_id, agent, env, n_experiments):
     exec_times = []
     wins = []
     moves_count = []
-    for _ in range(n_experiments):
-        exec_time, win, n_moves = run_experiment(agent, env)
+    iters = 0
+    while iters < n_experiments:
+        success, exec_time, win, n_moves = run_experiment(agent, env)
+        if not success:
+            continue
         wins.append(win)
         exec_times.append(exec_time)
         moves_count.append(n_moves)
+        iters += 1
 
     return {
         "exp_id": exp_id,
