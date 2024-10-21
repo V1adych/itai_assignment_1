@@ -1,0 +1,72 @@
+\documentclass[12pt]{article}
+
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{graphicx}
+\usepackage{hyperref}
+\usepackage{geometry}
+\geometry{a4paper, margin=1in}
+
+\title{Intro to AI \\ Homework Assignment 1}
+\author{Nikita Zagainov DSAI-01}
+\date{\today}
+
+\begin{document}
+
+\maketitle
+
+\section{Implementation Details}
+\subsection{A Star Algorithm}
+The code submitted to the assignment is an implementation of Agent that uses A*
+algorithm to find best path to the goal. The implementation uses Dijkstra's
+algorithm to traverse the map, the heuristic function is implemented as
+Manhattan distance between the current position and the keymaker position. Only
+heuristic function is used to estimate the cost of the path to the goal. This
+is the only modification of the A* algorithm that was made to the
+implementation.
+
+\subsection{Backtracking Algorithm}
+The code submitted to the assignment is an implementation of Agent that uses
+backtracking algorithm to find best path to the goal. The implementation uses
+BFS to traverse the map considering known threats, and whenever new information
+is available on dangers on built path, the agent backtracks to the last known
+safe position and rebuilds the path to the goal. No significant modifications
+were made to the backtracking algorithm.
+
+\subsection{Code}
+\href{https://github.com/V1adych/itai_assignment_1}{Link to the code repository}
+
+\section{Evaluation results}
+The agents were evaluated on 1000 randomly generated maps below is the summary
+of the results:
+
+\begin{table}[h!]
+    \centering
+    \begin{tabular}{|c|c|c|}
+        \hline
+        \textbf{Metric}                           & \textbf{A* Algorithm}  & \textbf{Backtracking Algorithm} \\ \hline
+        Mean Execution Time (s)                   & 0.00022995710372924804 & 0.0048852698802948              \\ \hline
+        Std Execution Time (s)                    & 0.0007183165074499156  & 0.011766218056042806            \\ \hline
+        Var Execution Time (s\textsuperscript{2}) & 5.159786048750448e-07  & 0.00013844388734234774          \\ \hline
+        Mean Moves                                & 10.298                 & 10.48                           \\ \hline
+        Std Moves                                 & 6.413204815067112      & 6.161623162771317               \\ \hline
+        Var Moves                                 & 41.12919599999999      & 37.9656                         \\ \hline
+        Win Fraction                              & 0.91                   & 0.915                           \\ \hline
+    \end{tabular}
+    \caption{Evaluation results of A* and Backtracking algorithms}
+    \label{tab:evaluation_results}
+\end{table}
+As can be seen from the table, algorithm do not have big
+statistical difference in terms of mean moves and win fraction. However, the
+execution time of the A* algorithm implementation provided is significantly
+lower than the execution time of the backtracking algorithm.
+
+\section{Conclusion}
+This assignment solution provides two implementations of the agent that can
+solve the problem of path finding. Some modifications were made to the A*
+algorithm to make it work with the problem. The backtracking algorithm was
+implemented without any modifications. The evaluation results show that the A*
+algorithm has slightly better performance in terms of execution time, but both
+algorithms show approximately the same performance in terms of mean moves and
+win fraction.
+\end{document}
