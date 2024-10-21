@@ -12,6 +12,7 @@ class BacktrackingAgent:
         self.path = None
         self.path_ptr = 0
 
+    # this method reads the observations from the environment
     def read_obs(self):
         n_obs = int(input())
         for _ in range(n_obs):
@@ -25,9 +26,7 @@ class BacktrackingAgent:
                 if obj == "B":
                     self.key_position = (x, y)
 
-    def get_distance(self, start, target):
-        return abs(start[0] - target[0]) + abs(start[1] - target[1])
-
+    # this methods finds all legal moves from the current position
     def get_legal_moves(self, position, visited):
         moves = []
         for i, j in product([-1, 0, 1], repeat=2):
@@ -45,6 +44,7 @@ class BacktrackingAgent:
             moves.append(new_position)
         return moves
 
+    # this method uses BFS to find possible path to the target
     def build_path(self, target):
         visited = set()
         queue = deque([(self.current_position, [])])
@@ -61,12 +61,17 @@ class BacktrackingAgent:
         self.path = None
         self.path_ptr = 0
 
+    # this method is called on every new move.
+    # it checks if the next move is in the danger zone.
+    # if so, it backtracks to the previous position
+    # and rebuilds the path
     def backtrack(self, next_move):
         if next_move in self.danger_zones:
             self.build_path(self.keymaker_position)
             return True
         return False
 
+    # this method returns the next move from the path
     def get_next_move(self):
         if not self.path:
             return None
@@ -76,6 +81,8 @@ class BacktrackingAgent:
         self.path_ptr += 1
         return next_move
 
+    # this method is called on every step
+    # it reads the observations, builds the path
     def make_move(self):
         self.read_obs()
         if self.current_position == self.keymaker_position:
@@ -97,10 +104,12 @@ class BacktrackingAgent:
 
 
 def main():
+    # read the initial inputs
     obs_type = input()
     keymaker_y, keymaker_x = map(int, input().split())
     agent = BacktrackingAgent((keymaker_x, keymaker_y))
     print("m 0 0")
+    # while agent is not done, make moves
     while True:
         move = agent.make_move()
         print(move)
