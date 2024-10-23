@@ -58,20 +58,29 @@ class AStarAgent:
         queue = [
             (
                 self.get_distance(self.current_position, target),
+                0,
+                self.get_distance(self.current_position, target),
                 self.current_position,
                 [],
             )
         ]
 
         while queue:
-            _, pos, path = heapq.heappop(queue)
+            _, cur_len, _, pos, path = heapq.heappop(queue)
             visited.add(pos)
             if pos == target:
                 return path[0]
 
             for move in self.get_legal_moves(pos, visited):
                 heapq.heappush(
-                    queue, (self.get_distance(move, target), move, path + [move])
+                    queue,
+                    (
+                        cur_len + 1 + self.get_distance(move, target),
+                        cur_len + 1,
+                        self.get_distance(move, target),
+                        move,
+                        path + [move],
+                    ),
                 )
 
         return None
