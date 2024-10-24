@@ -71,6 +71,21 @@ class BacktrackingAgent:
             return True
         return False
 
+    # returns shorted distance from position (0, 0) to keymaker
+    # taking into account all dangers stored in memory
+    # uses dijkstra algorithm
+    def get_shortest_distance(self):
+        queue = deque([(0, (0, 0))])
+        visited = set()
+        while queue:
+            cur_len, pos = queue.popleft()
+            visited.add(pos)
+            if pos == self.keymaker_position:
+                return cur_len
+            for move in self.get_legal_moves(pos, visited):
+                queue.append((cur_len + 1, move))
+        return -1
+
     # this method returns the next move from the path
     def get_next_move(self):
         if not self.path:
@@ -86,7 +101,7 @@ class BacktrackingAgent:
     def make_move(self):
         self.read_obs()
         if self.current_position == self.keymaker_position:
-            return f"e {self.n_moves}"
+            return f"e {self.get_shortest_distance()}"
 
         if self.path is None:
             self.build_path(self.keymaker_position)

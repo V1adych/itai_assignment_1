@@ -1,5 +1,6 @@
 import heapq
 from itertools import product
+from collections import deque
 
 
 class AStarAgent:
@@ -85,12 +86,27 @@ class AStarAgent:
 
         return None
 
+    # returns shorted distance from position (0, 0) to keymaker
+    # taking into account all dangers stored in memory
+    # uses dijkstra algorithm
+    def get_shortest_distance(self):
+        queue = deque([(0, (0, 0))])
+        visited = set()
+        while queue:
+            cur_len, pos = queue.popleft()
+            visited.add(pos)
+            if pos == self.keymaker_position:
+                return cur_len
+            for move in self.get_legal_moves(pos, visited):
+                queue.append((cur_len + 1, move))
+        return -1
+
     # this method is used to get agent move based on results of A* search
     def make_move(self):
         self.read_obs()
         next_move = self.a_star(self.keymaker_position)
         if self.current_position == self.keymaker_position:
-            return f"e {self.n_moves}"
+            return f"e {self.get_shortest_distance()}"
         if next_move is None:
             return "e -1"
         self.current_position = next_move
