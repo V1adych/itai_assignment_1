@@ -15,6 +15,17 @@
 
 \maketitle
 
+\section{Environment}
+The environment used for testing has the following characteristics:
+\begin{itemize}
+    \item Deterministic (no randomness);
+    \item Sequential (agent's position is defined by a sequence of previous steps);
+    \item Partially observable (agent can only see the immediate surroundings);
+    \item Discrete (agent can only move in four directions);
+    \item Dynamic (picking backdoor key changes map);
+    \item Single-agent (Enemies do not satisfy agent's properties);
+    \item Known (We know all of the rules of the environment);
+\end{itemize}
 \section{Implementation Details}
 \subsection{A Star Algorithm}
 The code submitted to the assignment is an implementation of Agent that uses A*
