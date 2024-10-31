@@ -60,9 +60,30 @@ of the results:
     \caption{Evaluation results of A* and Backtracking algorithms}
     \label{tab:evaluation_results}
 \end{table}
+\noindent
 As can be seen from the table, the algorithms do not have a big
 statistical difference in terms of mean moves. However, the execution time of the A* algorithm implementation provided is slightly higher than the execution time of the backtracking algorithm, and the win fraction difference is also not very high.
 
+\section{Unsolvable map example}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.8\textwidth]{unsolvable_map.png}
+    \caption{Example of an unsolvable map}
+    \label{fig:unsolvable_map}
+\end{figure}
+
+\subsection{Unsolvable Maps Analysis}
+During the evaluation, some maps were found to be unsolvable by both A* and
+Backtracking agents. These maps typically contained isolated sections or
+completely blocked paths that made it impossible for the agents to reach the
+keymaker. The primary reasons for unsolvability included:
+
+\begin{itemize}
+    \item Completely blocked paths with no possible route to the goal.
+    \item Maps where the keymaker was surrounded by threats with no safe path available.
+\end{itemize}
+\noindent
+The example shown in Figure \ref{fig:unsolvable_map} illustrates a scenario where the path to the keymaker and backdoor key is completely blocked, making it impossible for the agent to find a solution.
 \section{Conclusion}
 This assignment solution provides two implementations of the agent that can
 solve the problem of path finding. Both algorithms were implemented without any

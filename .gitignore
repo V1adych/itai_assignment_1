@@ -2,3 +2,4 @@ __pycache__
 report/*
 !report/main.tex
 !report/main.pdf
+!report/unsolvable_map.png
